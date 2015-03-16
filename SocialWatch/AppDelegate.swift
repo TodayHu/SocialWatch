@@ -13,10 +13,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         return true
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: NSString?, annotation: AnyObject) -> Bool {
+        if TYPE_REGISTER_RRSS == 3 {
+            // Google+ (3)
+            return GPPURLHandler.handleURL(url, sourceApplication: sourceApplication, annotation: annotation)
+        } else {
+            // Facebook (1)
+            var wasHandled:Bool = FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
+            return wasHandled
+        }
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {
